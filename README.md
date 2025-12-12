@@ -1,6 +1,6 @@
 # Topping Toggle
 
-A simple macOS menu bar app to switch audio output between headphones and speakers on your Topping E2x2 device.
+A simple cross-platform system tray app to switch audio output between headphones and speakers on your Topping E2x2 device.
 
 <img src="demo.png" alt="Topping Toggle Demo" width="400">
 
@@ -9,11 +9,13 @@ A simple macOS menu bar app to switch audio output between headphones and speake
 - 🎧 Quick switch to headphones only
 - 📢 Quick switch to speakers only
 - ✌️ Quick switch to both outputs
-- Clean menu bar interface with custom icon
+- Clean system tray interface
 - Visual indicator of current output
-- Keyboard shortcuts: `⌘1/2/3` when menu is open
+- Keyboard shortcuts: `⌘1/2/3` when menu is open (macOS only)
 
 ## Installation
+
+### macOS
 
 1. Create and activate virtual environment:
 
@@ -28,19 +30,47 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-## Usage
+### Windows
 
-### Menu Bar App (Recommended)
+1. Create and activate virtual environment:
 
-```bash
-cd /Users/fcurto/toppingtoggle
-source venv/bin/activate
-python menubar_app.py &
+```powershell
+python -m venv venv
+venv\Scripts\Activate.ps1
 ```
 
-Look for the icon in your menu bar (🎧/📢/✌️) and click it to switch outputs.
+If you get an execution policy error, run:
+```powershell
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
 
-**Keyboard Shortcuts:**
+2. Install dependencies:
+
+```powershell
+pip install -r requirements.txt
+```
+
+## Usage
+
+### System Tray App (Recommended)
+
+**macOS:**
+
+```bash
+source venv/bin/activate
+python tray_app.py &
+```
+
+**Windows:**
+
+```powershell
+venv\Scripts\Activate.ps1
+python tray_app.py
+```
+
+Look for the icon in your system tray (🎧/📢/✌️) and click it to switch outputs.
+
+**Keyboard Shortcuts (macOS only):**
 
 - `⌘1` - Switch to headphones (when menu is open)
 - `⌘2` - Switch to speakers (when menu is open)
@@ -48,8 +78,17 @@ Look for the icon in your menu bar (🎧/📢/✌️) and click it to switch out
 
 ### Command Line
 
+**macOS:**
+
 ```bash
 source venv/bin/activate
+python main.py [command]
+```
+
+**Windows:**
+
+```powershell
+venv\Scripts\Activate.ps1
 python main.py [command]
 ```
 
@@ -61,6 +100,8 @@ Commands:
 
 ## Building the App
 
+### macOS
+
 To rebuild the macOS application:
 
 ```bash
@@ -69,11 +110,21 @@ To rebuild the macOS application:
 
 The app will be created in `dist/Topping Toggle.app`. Drag it to your Applications folder to install.
 
+### Windows
+
+To build the Windows executable:
+
+```powershell
+.\build.ps1
+```
+
+The executable will be created in `dist\Topping Toggle.exe`. You can run it directly or copy it to your desired location.
+
 ## Important Notes
 
 ⚠️ **Close ToppingPro before running this app!**
 
-macOS only allows one application to access a HID device at a time. Make sure ToppingPro or any other Topping software is closed before using this tool.
+Only one application can access a HID device at a time. Make sure ToppingPro or any other Topping software is closed before using this tool.
 
 ## Device Info
 
@@ -83,6 +134,8 @@ macOS only allows one application to access a HID device at a time. Make sure To
 
 ## Requirements
 
-- macOS
+- macOS or Windows
 - Python 3.x
 - Topping E2x2 device connected
+
+**Note:** On Windows, you may need to run as Administrator if you encounter permission issues accessing the HID device.

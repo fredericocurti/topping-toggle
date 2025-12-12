@@ -2,10 +2,10 @@
 
 
 a = Analysis(
-    ['menubar_app.py'],
+    ['tray_app.py'],
     pathex=[],
     binaries=[],
-    datas=[],
+    datas=[('icon.png', '.')],  # Bundle icon.png with the executable
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
@@ -35,11 +35,5 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    icon=['icon.icns'],
-)
-app = BUNDLE(
-    exe,
-    name='Topping Toggle.app',
-    icon='icon.icns',
-    bundle_identifier='com.toppingtoggle.app',
+    icon=['icon.png'],
 )

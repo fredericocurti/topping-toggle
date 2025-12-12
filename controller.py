@@ -47,12 +47,21 @@ def _send_payload(payload):
     try:
         device.open(VENDOR_ID, PRODUCT_ID)
     except OSError:
-        raise DeviceError(
-            "Could not open device. Possible causes:\n"
-            "  • ToppingPro or other software is using the device\n"
-            "  • Device is not connected\n"
-            "  • Permission issues (try sudo)"
-        )
+        import platform
+        if platform.system() == "Windows":
+            raise DeviceError(
+                "Could not open device. Possible causes:\n"
+                "  • ToppingPro or other software is using the device\n"
+                "  • Device is not connected\n"
+                "  • Run as Administrator if permission issues occur"
+            )
+        else:
+            raise DeviceError(
+                "Could not open device. Possible causes:\n"
+                "  • ToppingPro or other software is using the device\n"
+                "  • Device is not connected\n"
+                "  • Permission issues (try sudo)"
+            )
     try:
         device.write(b"\x00" + payload)
         time.sleep(0.05)
