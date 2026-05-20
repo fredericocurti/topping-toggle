@@ -8,29 +8,31 @@ import time
 VENDOR_ID = 0x152A
 PRODUCT_ID = 0x8756
 
-# --- Headphone Only ---
+# Byte 6 selects the output: 01=Headphones, 03=TRS, 05=AUX. Byte 10 = 00 mute / 01 unmute.
+
+# --- Headphones Only (TRS + AUX muted) ---
 HEADPHONE_ONLY = [
-    bytes.fromhex("22 33 20 01 01 37 01 00 00 00 01 00 00 66 77 00"),
-    bytes.fromhex("22 33 20 01 01 37 03 00 00 00 01 00 00 66 77 00"),
-    bytes.fromhex("22 33 20 01 01 37 05 00 00 00 00 00 00 66 77 00"),  # 05=00 for headphone routing
+    bytes.fromhex("22 33 20 01 01 37 01 00 00 00 01 00 00 66 77 00"),  # HP unmute
+    bytes.fromhex("22 33 20 01 01 37 03 00 00 00 00 00 00 66 77 00"),  # TRS mute
+    bytes.fromhex("22 33 20 01 01 37 05 00 00 00 00 00 00 66 77 00"),  # AUX mute
     bytes.fromhex("22 33 20 01 31 03 02 00 00 00 00 00 00 66 77 00"),
     bytes.fromhex("22 33 20 01 32 03 02 00 00 00 00 00 00 66 77 00"),
 ]
 
-# --- Speakers Only ---
+# --- Speakers Only (Headphones muted, TRS + AUX unmuted) ---
 SPEAKERS_ONLY = [
-    bytes.fromhex("22 33 20 01 01 37 01 00 00 00 00 00 00 66 77 00"),  # 01=00 mute headphone channel
-    bytes.fromhex("22 33 20 01 01 37 03 00 00 00 00 00 00 66 77 00"),  # 03=00 mute headphone channel
-    bytes.fromhex("22 33 20 01 01 37 05 00 00 00 01 00 00 66 77 00"),  # 05=01 for speaker routing
+    bytes.fromhex("22 33 20 01 01 37 01 00 00 00 00 00 00 66 77 00"),  # HP mute
+    bytes.fromhex("22 33 20 01 01 37 03 00 00 00 01 00 00 66 77 00"),  # TRS unmute
+    bytes.fromhex("22 33 20 01 01 37 05 00 00 00 01 00 00 66 77 00"),  # AUX unmute
     bytes.fromhex("22 33 20 01 31 03 02 00 00 00 00 00 00 66 77 00"),
     bytes.fromhex("22 33 20 01 32 03 02 00 00 00 00 00 00 66 77 00"),
 ]
 
-# --- Both Outputs ---
+# --- Both Outputs (nothing muted) ---
 BOTH_OUTPUTS = [
-    bytes.fromhex("22 33 20 01 01 37 01 00 00 00 01 00 00 66 77 00"),  # 01=01 unmute headphone
-    bytes.fromhex("22 33 20 01 01 37 03 00 00 00 01 00 00 66 77 00"),  # 03=01 unmute headphone
-    bytes.fromhex("22 33 20 01 01 37 05 00 00 00 01 00 00 66 77 00"),  # 05=01 enable speakers
+    bytes.fromhex("22 33 20 01 01 37 01 00 00 00 01 00 00 66 77 00"),  # HP unmute
+    bytes.fromhex("22 33 20 01 01 37 03 00 00 00 01 00 00 66 77 00"),  # TRS unmute
+    bytes.fromhex("22 33 20 01 01 37 05 00 00 00 01 00 00 66 77 00"),  # AUX unmute
     bytes.fromhex("22 33 20 01 31 03 02 00 00 00 00 00 00 66 77 00"),
     bytes.fromhex("22 33 20 01 32 03 02 00 00 00 00 00 00 66 77 00"),
 ]
